@@ -22,25 +22,31 @@ try
     Console.WriteLine("Bağlantı bekleniyor...");
     Socket isleyici = listener.Accept();
 
-    // İstemciden gelen veriler.
-    string data = null;
-    byte[] bytes = null;
 
     while (true)
     {
-        bytes = new byte[1024];
-        int bytesRec = isleyici.Receive(bytes);
-        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-        if (data.IndexOf("<EOF>") > -1)
+        // İstemciden gelen veriler.
+        string data = null;
+        byte[] bytes = null;
+
+        while (true)
         {
-            break;
+            bytes = new byte[1024];
+            int bytesRec = isleyici.Receive(bytes);
+            data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+            if (data.IndexOf("<EOF>") > -1)
+            {
+                break;
+            }
         }
+
+        Console.WriteLine("Metin Alındı : {0}", data);
+
+        byte[] msg = Encoding.ASCII.GetBytes(data + " - donen cvb");
+        isleyici.Send(msg);
     }
 
-    Console.WriteLine("Metin Alındı : {0}", data);
 
-    byte[] msg = Encoding.ASCII.GetBytes(data+" - donen cvb");
-    isleyici.Send(msg);
     isleyici.Shutdown(SocketShutdown.Both);
     isleyici.Close();
 }

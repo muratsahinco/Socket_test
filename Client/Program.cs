@@ -24,19 +24,21 @@ try
         // Uzak Uç Noktaya Bağlan
         sender.Connect(uzakEP);
 
-        Console.WriteLine("Soket Bağlandı {0}",
-            sender.RemoteEndPoint.ToString());
+        for (int i = 0; i < 15; i++)
+        {
+            Console.WriteLine("Soket Bağlandı {0}", sender.RemoteEndPoint.ToString());
 
-        // Veri dizesini bir bayt dizi olarak kodlayın.
-        byte[] mesaj = Encoding.ASCII.GetBytes("Bu mesaj <EOF>");
+            // Veri dizesini bir bayt dizi olarak kodlayın.
+            byte[] mesaj = Encoding.ASCII.GetBytes("Bu mesaj <EOF>");
 
-        // Verileri soket üzerinden gönderin.
-        int bytesSent = sender.Send(mesaj);
+            // Verileri soket üzerinden gönderin.
+            int bytesSent = sender.Send(mesaj);
 
-        // Uzak cihazdan yanıtı alın.
-        int bytesRec = sender.Receive(bytes);
-        Console.WriteLine("Test = {0}",
-            Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            // Uzak cihazdan yanıtı alın.
+            int bytesRec = sender.Receive(bytes);
+            Console.WriteLine("Test = {0}",
+                Encoding.ASCII.GetString(bytes, 0, bytesRec));
+        }
 
         // Soket bağlantısını bırak
         sender.Shutdown(SocketShutdown.Both);
