@@ -42,7 +42,7 @@ try
 
         Console.WriteLine("Metin Alındı : {0}", data);
 
-        byte[] msg = Encoding.ASCII.GetBytes(data + " - donen cvb");
+        byte[] msg = Encoding.ASCII.GetBytes(data + " - donen");
         isleyici.Send(msg);
     }
 

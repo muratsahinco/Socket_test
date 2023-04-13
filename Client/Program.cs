@@ -24,7 +24,7 @@ try
         // Uzak Uç Noktaya Bağlan
         sender.Connect(uzakEP);
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 500; i++)
         {
             Console.WriteLine("Soket Bağlandı {0}", sender.RemoteEndPoint.ToString());
 
@@ -36,8 +36,8 @@ try
 
             // Uzak cihazdan yanıtı alın.
             int bytesRec = sender.Receive(bytes);
-            Console.WriteLine("Test = {0}",
-                Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            Console.WriteLine("Test = {0}-{1}",
+                Encoding.ASCII.GetString(bytes, 0, bytesRec), i);
         }
 
         // Soket bağlantısını bırak
